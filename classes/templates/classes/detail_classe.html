@@ -1,0 +1,48 @@
+{% extends 'home.html' %}
+{% block content %}
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Détail de la Classe</title>
+        <!-- Inclure Bootstrap CSS -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Inclure FontAwesome (pour les icônes) si nécessaire -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container mt-4">
+            <h1 class="mb-4">Détail de la Classe</h1>
+
+            <!-- Affichage des détails de la classe -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ object.nom }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Niveau : {{ object.niveau }}</h6>
+
+                    <h5 class="mt-4">Enseignants :</h5>
+                    <ul class="list-group">
+                        {% for enseignant in object.enseignants.all %}
+                            <li class="list-group-item">
+                                {{ enseignant.prenom }} {{ enseignant.nom }}
+                            </li>
+                        {% empty %}
+                            <li class="list-group-item">Aucun enseignant associé.</li>
+                        {% endfor %}
+                    </ul>
+
+                    <div class="mt-4">
+                        <a href="{% url 'modifier_classe' object.pk %}" class="btn btn-warning">Modifier</a>
+                        <a href="{% url 'supprimer_classe' object.pk %}" class="btn btn-danger">Supprimer</a>
+                        <a href="{% url 'liste_classes' %}" class="btn btn-primary">Retour à la liste</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inclure Bootstrap JS et dépendances -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+    </html>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'home.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ form.instance.pk|yesno:"Modifier,Ajouter" }} Étudiant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans antialiased">
+    <!-- Header Section -->
+    <div class="bg-maroon-800 text-white py-6 shadow-lg">
+        <div class="container mx-auto px-6">
+            <h1 class="text-3xl font-bold">{{ form.instance.pk|yesno:"Modifier,Ajouter" }} un Étudiant</h1>
+            <p class="text-maroon-200 mt-2">Gestion des dossiers étudiants</p>
+        </div>
+    </div>
+
+    <div class="container mx-auto p-6 max-w-2xl">
+        <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-8">
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {% for field in form %}
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-gray-700">{{ field.label }}</label>
+                        <div class="relative">
+                            {% render_field field class="w-full px-4 py-3 text-sm border-2 border-gray-200 rounded-lg shadow-sm focus:outline-none focus:border-maroon-500 focus:ring-2 focus:ring-maroon-100 transition duration-200" %}
+                        </div>
+                        {% if field.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ field.errors|striptags }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 border-t border-gray-200">
+                    <button type="submit" class="w-full sm:w-auto px-8 py-3 bg-maroon-600 text-white rounded-lg shadow hover:bg-maroon-700 transition duration-300 font-semibold">
+                        💾 {{ form.instance.pk|yesno:"Modifier,Enregistrer" }}
+                    </button>
+                    <a href="{% url 'etudiant_list' %}" class="w-full sm:w-auto px-8 py-3 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 transition duration-300 font-semibold text-center">
+                        ❌ Annuler
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        .bg-maroon-800 { background-color: #800000; }
+        .bg-maroon-600 { background-color: #A52A2A; }
+        .bg-maroon-700 { background-color: #8B0000; }
+        .bg-maroon-500 { background-color: #A52A2A; }
+        .text-maroon-200 { color: #F5D7D7; }
+        .focus\\:border-maroon-500:focus { border-color: #A52A2A; }
+        .focus\\:ring-maroon-100:focus { --tw-ring-color: rgba(165, 42, 42, 0.1); }
+    </style>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'home.html' %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-4">
+        <label for="{{ form.nom.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">Nom:</label>
+        {{ form.nom }}
+    </div>
+     
+    <button type="submit" class="px-5 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition">Enregistrer</button>
+    <a href="{% url 'matiere_list' %}" class="px-5 py-2 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 transition ml-4">Annuler</a>
+</form>
+{% endblock %}

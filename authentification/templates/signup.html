@@ -1,0 +1,48 @@
+{% block title %}Inscription{% endblock %}
+{% block content %}
+<!-- Tailwind CDN (vite & senp) -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+  <h2 class="text-2xl font-semibold mb-6 text-center text-gray-800">Créer un compte</h2>
+
+  <form method="POST" novalidate class="space-y-5">
+    {% load widget_tweaks %}
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <div>
+      {{ form.username.label_tag }}
+      {{ form.username|add_class:"w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" }}
+      <p class="text-red-600 text-sm mt-1">{{ form.username.errors }}</p>
+    </div>
+
+    <div>
+      {{ form.email.label_tag }}
+      {{ form.email|add_class:"w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" }}
+      <p class="text-red-600 text-sm mt-1">{{ form.email.errors }}</p>
+    </div>
+
+    <div>
+      {{ form.password1.label_tag }}
+      {{ form.password1|add_class:"w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" }}
+      <p class="text-red-600 text-sm mt-1">{{ form.password1.errors }}</p>
+    </div>
+
+    <div>
+      {{ form.password2.label_tag }}
+      {{ form.password2|add_class:"w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" }}
+      <p class="text-red-600 text-sm mt-1">{{ form.password2.errors }}</p>
+    </div>
+
+    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-md transition duration-300">
+      S'inscrire
+    </button>
+  </form>
+
+  <p class="mt-4 text-center text-gray-600">
+    Vous avez déjà un compte ?
+    <a href="{% url 'login' %}" class="text-blue-600 hover:underline">Se connecter</a>
+  </p>
+</div>
+{% endblock %}

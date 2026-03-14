@@ -1,0 +1,20 @@
+
+{% extends 'home.html' %}
+{% block content %}
+{% block title %}Liste des Horaires{% endblock %}
+
+
+<div class="container mt-4">
+    <h1 class="mb-4">Liste des Horaires</h1>
+    <div class="mb-3">
+        <a href="{% url 'create_horaire' %}" class="btn btn-primary">Créer un nouvel horaire</a>
+    </div>
+    <ul class="list-group">
+        {% for horaire in horaire_list %}
+        <li class="list-group-item">
+            <a href="{% url 'detail_horaire' pk=horaire.pk %}">{{ horaire }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% andblock %}

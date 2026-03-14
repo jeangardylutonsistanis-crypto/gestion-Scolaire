@@ -1,0 +1,94 @@
+{% extends 'home.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails de l'Étudiant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans antialiased">
+    <!-- Header Section -->
+    <div class="bg-maroon-800 text-white py-6 shadow-lg">
+        <div class="container mx-auto px-6">
+            <h1 class="text-3xl font-bold">Détails de l'Étudiant</h1>
+            <p class="text-maroon-200 mt-2">Informations personnelles et académiques</p>
+        </div>
+    </div>
+
+    <div class="container mx-auto p-6 max-w-4xl">
+        <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-8">
+            <!-- Student Info Card -->
+            <div class="mb-8 text-center">
+                <div class="w-20 h-20 bg-maroon-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl text-maroon-600">👨‍🎓</span>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800">{{ etudiant.prenom }} {{ etudiant.nom }}</h2>
+                <p class="text-gray-600">Étudiant - {{ etudiant.classe }}</p>
+            </div>
+
+            <!-- Information Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="space-y-4">
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                        <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Informations Personnelles</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <span class="text-gray-600 font-medium">Nom complet:</span>
+                                <p class="text-gray-800">{{ etudiant.nom }} {{ etudiant.prenom }}</p>
+                            </div>
+                            <div>
+                                <span class="text-gray-600 font-medium">Date de naissance:</span>
+                                <p class="text-gray-800">{{ etudiant.date_naissance }}</p>
+                            </div>
+                            <div>
+                                <span class="text-gray-600 font-medium">Adresse:</span>
+                                <p class="text-gray-800">{{ etudiant.adresse }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                        <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Informations Académiques</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <span class="text-gray-600 font-medium">Classe:</span>
+                                <p class="text-gray-800">{{ etudiant.classe }}</p>
+                            </div>
+                            <div>
+                                <span class="text-gray-600 font-medium">Statut:</span>
+                                <span class="px-3 py-1 text-xs font-semibold bg-green-100 text-green-800 rounded-full">
+                                    Actif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap gap-4 justify-center pt-6 border-t border-gray-200">
+                <a href="{% url 'etudiant_update' pk=etudiant.pk %}" class="px-6 py-3 bg-maroon-600 text-white rounded-lg shadow hover:bg-maroon-700 transition duration-300 font-semibold">
+                    ✏️ Modifier
+                </a>
+                <a href="{% url 'etudiant_list' %}" class="px-6 py-3 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 transition duration-300 font-semibold">
+                    📋 Retour à la Liste
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .bg-maroon-800 { background-color: #800000; }
+        .bg-maroon-600 { background-color: #A52A2A; }
+        .bg-maroon-700 { background-color: #8B0000; }
+        .bg-maroon-100 { background-color: #F5D7D7; }
+        .text-maroon-200 { color: #F5D7D7; }
+        .text-maroon-600 { color: #A52A2A; }
+    </style>
+</body>
+</html>
+{% endblock %}

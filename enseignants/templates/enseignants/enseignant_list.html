@@ -1,0 +1,327 @@
+{% extends 'home.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Enseignants</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+        .animate-slide-up {
+            animation: slideUp 0.5s ease-out;
+        }
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .fade-in-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .fade-in-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Header avec dégradé -->
+    <header class="bg-gradient-to-r from-blue-800 to-indigo-700 text-white shadow-2xl">
+        <div class="container mx-auto px-4 py-8">
+            <div class="text-center animate-fade-in">
+                <div class="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-chalkboard-teacher text-3xl"></i>
+                </div>
+                <h1 class="text-4xl font-bold mb-2">👨‍🏫 Liste des Enseignants</h1>
+                <p class="text-blue-100 text-lg">Gestion du corps professoral</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenu principal -->
+    <main class="container mx-auto px-4 py-8 -mt-6">
+        <!-- Statistiques -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 animate-slide-up">
+            <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-blue-500 hover-lift">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
+                        <i class="fas fa-users text-blue-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">Total Enseignants</p>
+                        <p class="text-2xl font-bold text-gray-800">{{ enseignants|length }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-orange-500 hover-lift">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mr-4">
+                        <i class="fas fa-book text-orange-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">Matières Couvertes</p>
+                        <p class="text-2xl font-bold text-gray-800">{{ enseignants|length }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-green-500 hover-lift">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mr-4">
+                        <i class="fas fa-user-check text-green-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">Disponibles</p>
+                        <p class="text-2xl font-bold text-gray-800">{{ enseignants|length }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tableau Desktop -->
+        <div class="hidden lg:block bg-white rounded-3xl shadow-2xl overflow-hidden animate-fade-in">
+            <div class="px-8 py-6 bg-gradient-to-r from-gray-50 to-blue-50 border-b">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-gray-800">
+                        <i class="fas fa-list-ul mr-3 text-blue-600"></i>
+                        Corps Professoral
+                    </h2>
+                    <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold">
+                        {{ enseignants|length }} enseignant(s)
+                    </span>
+                </div>
+            </div>
+
+            <table class="w-full">
+                <thead class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
+                    <tr>
+                        <th class="px-8 py-4 text-left font-semibold uppercase tracking-wider">
+                            <i class="fas fa-user mr-2"></i>Enseignant
+                        </th>
+                        <th class="px-8 py-4 text-left font-semibold uppercase tracking-wider">
+                            <i class="fas fa-book mr-2"></i>Matières
+                        </th>
+                        <th class="px-7 py-4 text-left font-semibold uppercase tracking-wider">
+                            <i class="fas fa-phone mr-1"></i>Contact
+                        </th>
+
+                        <th class="px-8 py-4 text-left font-semibold uppercase tracking-wider">
+                            <i class=" "></i>Details
+                        </th>
+
+
+                        
+                        {% if user.is_staff %}
+                        <th class="px-8 py-4 text-left font-semibold uppercase tracking-wider">
+                            <i class="fas fa-cogs mr-2"></i>Actions
+                        </th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    {% for enseignant in enseignants %}
+                    <tr class="fade-in-scroll hover:bg-blue-50 transition-all duration-300 group">
+                        <td class="px-8 py-6">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center mr-4 text-white font-semibold">
+                                    {{ enseignant.prenom|first }}{{ enseignant.nom|first }}
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900 text-lg">{{ enseignant.prenom }} {{ enseignant.nom }}</p>
+                                    <p class="text-sm text-gray-500">Professeur</p>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="px-8 py-6">
+                            {% if enseignant.get_matieres %}
+                                {{ enseignant.get_matieres }}
+                            {% else %}
+                                <span class="text-gray-400 italic">Aucune matière</span>
+                            {% endif %}
+                        </td>
+
+                        <td class="px-8 py-6">
+                            <div class="flex items-center text-gray-700">
+                                <i class="fas fa-phone text-green-500 mr-2"></i>
+                                {{ enseignant.contact }}
+                            </div>
+                        </td>
+
+
+                        {% if user.is_staff %}
+                        
+                        <!-- ✅ Détails nan pwòp kolòn li -->
+                        <td class="px-8 py-6">
+                            <a href="{% url 'enseignant_detail' pk=enseignant.pk %}" 
+                            class="bg-orange-600 text-white px-6 py-2 rounded-xl font-semibold shadow-lg block text-center">
+                                <i class="fas fa-info-circle mr-2"></i>Détails
+                            </a>
+                        </td>
+                        <td class="px-8 py-6">
+                            <div class="flex space-x-3">
+                                <a href="{% url 'enseignant_update' pk=enseignant.pk %}" 
+                                class="bg-orange-600 text-white px-6 py-2 rounded-xl font-semibold shadow-lg">
+                                    <i class="fas fa-edit mr-2"></i>Modifier
+                                </a>
+                                <a href="{% url 'enseignant_delete' pk=enseignant.pk %}" 
+                                class="bg-red-600 text-white px-6 py-2 rounded-xl font-semibold shadow-lg">
+                                    <i class="fas fa-trash mr-2"></i>Supprimer
+                                </a>
+                            </div>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="px-8 py-12 text-center">
+                            <div class="text-gray-400 text-6xl mb-4">
+                                <i class="fas fa-user-slash"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-600 mb-2">Aucun enseignant trouvé</h3>
+                            <p class="text-gray-500">Commencez par ajouter le premier enseignant</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+        <!-- Cards Mobile -->
+        <div class="lg:hidden space-y-6">
+            {% for enseignant in enseignants %}
+            <div class="bg-white rounded-2xl shadow-xl p-6 hover-lift fade-in-scroll">
+                <!-- En-tête de la carte -->
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
+                            {{ enseignant.prenom|first }}{{ enseignant.nom|first }}
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">{{ enseignant.prenom }} {{ enseignant.nom }}</h3>
+                            <p class="text-blue-600 font-medium">Professeur</p>
+                        </div>
+                    </div>
+                    <div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">
+                        <i class="fas fa-circle text-xs mr-1"></i>
+                        Actif
+                    </div>
+                </div>
+
+                <!-- Informations -->
+                <div class="space-y-3 mb-4">
+                    <div class="flex items-center text-gray-700">
+                        <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-book text-orange-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium">Matières</p>
+                            <p class="text-sm">
+                                {% if enseignant.get_matieres %}
+                                    {{ enseignant.get_matieres }}
+                                {% else %}
+                                    <span class="text-gray-400">Aucune matière</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center text-gray-700">
+                        <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-phone text-green-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium">Contact</p>
+                            <p class="text-sm">{{ enseignant.contact }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <!-- Actions -->
+                {% if user.is_staff %}
+                <div class="flex space-x-3 pt-4 border-t border-gray-200">
+                    <a href="{% url 'enseignant_update' pk=enseignant.pk %}" 
+                    class="flex-1 bg-orange-600 text-white py-3 rounded-xl font-semibold text-center shadow-lg">
+                        <i class="fas fa-edit mr-2"></i>Modifier
+                    </a>
+                    <a href="{% url 'enseignant_delete' pk=enseignant.pk %}" 
+                    class="flex-1 bg-red-600 text-white py-3 rounded-xl font-semibold text-center shadow-lg">
+                        <i class="fas fa-trash mr-2"></i>Supprimer
+                    </a>
+                </div>
+
+
+                {% endif %}
+            </div>
+            {% empty %}
+            <div class="bg-white rounded-2xl shadow-xl p-8 text-center animate-fade-in">
+                <div class="text-gray-300 text-6xl mb-4">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-600 mb-2">Aucun enseignant enregistré</h3>
+                <p class="text-gray-500 mb-6">Votre liste d'enseignants est vide pour le moment</p>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <!-- Bouton retour en haut -->
+    <button id="backToTop" class="fixed bottom-8 right-8 w-14 h-14 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 opacity-0 z-50">
+        <i class="fas fa-chevron-up text-xl"></i>
+    </button>
+
+    <script>
+        // Animation au scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.fade-in-scroll');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                if (elementTop < window.innerHeight - 100) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Bouton retour en haut
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.style.opacity = '1';
+            } else {
+                backToTop.style.opacity = '0';
+            }
+            animateOnScroll();
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', () => {
+            animateOnScroll();
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

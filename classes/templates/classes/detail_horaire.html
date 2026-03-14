@@ -1,0 +1,21 @@
+{% extends 'home.html' %}
+{% block content %}
+
+{% block title %}Détail de l'Horaire{% endblock %}
+
+
+<div class="container mt-4">
+    <h1 class="mb-4">Détail de l'Horaire</h1>
+    <dl class="row">
+        <dt class="col-sm-3">Champ 1:</dt>
+        <dd class="col-sm-9">{{ horaire.champ1 }}</dd>
+        <dt class="col-sm-3">Champ 2:</dt>
+        <dd class="col-sm-9">{{ horaire.champ2 }}</dd>
+        <!-- Ajoutez plus de champs selon les besoins -->
+    </dl>
+    <a href="{% url 'update_horaire' pk=horaire.pk %}" class="btn btn-warning">Modifier</a>
+    <a href="{% url 'delete_horaire' pk=horaire.pk %}" class="btn btn-danger">Supprimer</a>
+    <a href="{% url 'liste_horaire' %}" class="btn btn-secondary">Retour à la liste</a>
+</div>
+{% endblock %}
+

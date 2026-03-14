@@ -1,0 +1,353 @@
+{% extends "base.html" %}
+{% load static %}
+<p class="text-red-500">
+  Utilisateur connecté : {{ user.is_authenticated }}
+</p>
+
+
+{% block title %}Accueil - Collège Jean Gardy (CJG){% endblock %}
+
+{% block content %}
+   
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    .hero-section {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+    
+    .hero-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      z-index: 1;
+    }
+    
+    .hero-slide.active {
+      opacity: 1;
+    }
+    
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 2;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 3;
+    }
+    
+    .section-padding {
+      padding: 5rem 0;
+    }
+    
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+
+  <!-- Section Hero avec slider -->
+  <section class="hero-section flex items-center justify-center text-white">
+    <!-- Slides d'images -->
+    <div class="hero-slide" id="slide-1" style="background-image: url('{% static 'images/bg 0.jpg' %}');"></div>
+    <div class="hero-slide" id="slide-2" style="background-image: url('{% static 'images/bg sc.jpg' %}');"></div>
+    <div class="hero-slide" id="slide-3" style="background-image: url('{% static 'images/bak.jpg' %}');"></div>
+    
+    <!-- Overlay sombre -->
+    <div class="hero-overlay"></div>
+    
+    <!-- Contenu principal -->
+    <div class="hero-content text-center px-4 max-w-4xl">
+      <h1 class="text-4xl md:text-6xl font-bold mb-6">Collège Jean Gardy (CJG) </h1>
+      <p class="text-xl md:text-2xl mb-8">Éduquer, Former et Inspirer la prochaine génération de leaders</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="#about" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition duration-300">
+          Découvrir notre école
+        </a>
+        <a href="#contact" class="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white px-6 py-3 rounded-lg font-semibold transition duration-300">
+          Nous contacter
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section À propos -->
+  <section id="about" class="section-padding bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Bienvenue au Collège Jean Gardy (CJG)</h2>
+        <div class="w-24 h-1 bg-blue-600 mx-auto"></div>
+      </div>
+      
+      <div class="flex flex-col md:flex-row items-center gap-8">
+        <div class="md:w-1/2">
+          <img src="{% static 'images/bak.jpg' %}" alt="Collège Bon Berger" class="rounded-lg shadow-lg w-full">
+        </div>
+        <div class="md:w-1/2">
+          <h3 class="text-2xl font-bold text-gray-800 mb-4">Notre Mission Éducative</h3>
+          <p class="text-gray-600 mb-4">
+            Fondé avec pour objectif de fournir une éducation de qualité, le Collège Jean Gardy (CJG) s'engage à former des élèves compétents, responsables et engagés envers leur communauté.
+          </p>
+          <p class="text-gray-600 mb-6">
+            Notre établissement combine excellence académique, développement personnel et valeurs morales pour préparer nos étudiants à réussir dans un monde en constante évolution.
+          </p>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="flex items-center">
+              <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span>Enseignement de qualité</span>
+            </div>
+            <div class="flex items-center">
+              <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span>Encadrement personnalisé</span>
+            </div>
+            <div class="flex items-center">
+              <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span>Activités parascolaires</span>
+            </div>
+            <div class="flex items-center">
+              <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span>Environnement sécurisé</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Programmes -->
+  <section class="section-padding bg-gray-100">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Nos Programmes</h2>
+        <div class="w-24 h-1 bg-blue-600 mx-auto"></div>
+        <p class="text-gray-600 max-w-2xl mx-auto mt-4">Découvrez notre offre éducative complète adaptée à tous les niveaux</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+          <div class="h-48 bg-blue-600 flex items-center justify-center">
+            <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14v6l9-5-9-5-9 5 9 5z"></path>
+            </svg>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-3">Cycle Secondaire</h3>
+            <p class="text-gray-600 mb-4">Un programme complet pour les élèves du secondaire avec des options scientifiques, littéraires et techniques.</p>
+            <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 flex items-center">
+              En savoir plus
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+          <div class="h-48 bg-green-600 flex items-center justify-center">
+            <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+            </svg>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-3">Programmes Spécialisés</h3>
+            <p class="text-gray-600 mb-4">Des formations spécialisées dans différents domaines pour répondre aux besoins spécifiques des élèves.</p>
+            <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 flex items-center">
+              En savoir plus
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+          <div class="h-48 bg-purple-600 flex items-center justify-center">
+            <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+            </svg>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-3">Activités Parascolaires</h3>
+            <p class="text-gray-600 mb-4">Sports, arts, clubs et autres activités pour le développement complet de nos élèves.</p>
+            <a href="#" class="text-blue-600 font-semibold hover:text-blue-800 flex items-center">
+              En savoir plus
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Actualités -->
+  <section class="section-padding bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Actualités & Événements</h2>
+        <div class="w-24 h-1 bg-blue-600 mx-auto"></div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+          <div class="h-48 bg-cover bg-center" style="background-image: url('{% static 'images/bg sc.jpg' %}');"></div>
+          <div class="p-6">
+            <div class="text-sm text-blue-600 mb-2">15 Octobre 2023</div>
+            <h3 class="text-xl font-bold text-gray-800 mb-3">Journée Portes Ouvertes</h3>
+            <p class="text-gray-600 mb-4">Venez découvrir notre établissement et nos programmes lors de notre journée portes ouvertes.</p>
+            <a href="#" class="text-blue-600 font-semibold hover:text-blue-800">Lire la suite</a>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+          <div class="h-48 bg-cover bg-center" style="background-image: url('{% static 'images/bg 0.jpg' %}');"></div>
+          <div class="p-6">
+            <div class="text-sm text-blue-600 mb-2">5 Novembre 2023</div>
+            <h3 class="text-xl font-bold text-gray-800 mb-3">Compétition Scientifique</h3>
+            <p class="text-gray-600 mb-4">Nos élèves ont brillamment représenté l'école lors de la compétition scientifique régionale.</p>
+            <a href="#" class="text-blue-600 font-semibold hover:text-blue-800">Lire la suite</a>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+          <div class="h-48 bg-cover bg-center" style="background-image: url('{% static 'images/bak.jpg' %}');"></div>
+          <div class="p-6">
+            <div class="text-sm text-blue-600 mb-2">20 Décembre 2023</div>
+            <h3 class="text-xl font-bold text-gray-800 mb-3">Spectacle de Noël</h3>
+            <p class="text-gray-600 mb-4">Préparez-vous pour notre traditionnel spectacle de Noël organisé par nos élèves.</p>
+            <a href="#" class="text-blue-600 font-semibold hover:text-blue-800">Lire la suite</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Contact -->
+  <section id="contact" class="section-padding bg-blue-600 text-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Contactez-nous</h2>
+        <div class="w-24 h-1 bg-white mx-auto"></div>
+        <p class="max-w-2xl mx-auto mt-4">N'hésitez pas à nous contacter pour plus d'informations sur nos programmes et admissions.</p>
+      </div>
+      
+      <div class="max-w-4xl mx-auto bg-white text-gray-800 rounded-lg shadow-lg overflow-hidden">
+        <div class="md:flex">
+          <div class="md:w-1/2 bg-blue-700 text-white p-8">
+            <h3 class="text-2xl font-bold mb-6">Informations de contact</h3>
+            <div class="mb-6">
+              <div class="flex items-center mb-4">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <span>jeremie, Haiti</span>
+              </div>
+              <div class="flex items-center mb-4">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                </svg>
+                <span>+509 XX XX XXXX</span>
+              </div>
+              <div class="flex items-center">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+                <span>info@jeangardy.edu.ht</span>
+              </div>
+            </div>
+          </div>
+          <div class="md:w-1/2 p-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">Envoyez-nous un message</h3>
+            <form>
+              <div class="mb-4">
+                <input type="text" placeholder="Votre nom" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+              <div class="mb-4">
+                <input type="email" placeholder="Votre email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+              <div class="mb-4">
+                <textarea placeholder="Votre message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+              </div>
+              <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-semibold transition duration-300">
+                Envoyer le message
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Gestion du slider hero
+      const slides = document.querySelectorAll('.hero-slide');
+      let currentSlide = 0;
+      
+      function showSlide(index) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        slides[index].classList.add('active');
+      }
+      
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      }
+      
+      // Initialisation
+      showSlide(currentSlide);
+      setInterval(nextSlide, 5000);
+      
+      // Animation au défilement
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+      
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in-up');
+          }
+        });
+      }, observerOptions);
+      
+      // Observer les éléments à animer
+      document.querySelectorAll('.card-hover').forEach(card => {
+        observer.observe(card);
+      });
+    });
+  </script>
+  
+{% endblock %}

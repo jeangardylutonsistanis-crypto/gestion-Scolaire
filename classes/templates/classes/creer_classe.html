@@ -1,0 +1,18 @@
+{% extends 'home.html' %}
+{% block content %}
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Créer une Classe</title>
+    </head>
+    <body>
+        <h1>Créer une Classe</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Enregistrer</button>
+        </form>
+        <a href="{% url 'liste_classes' %}">Retour à la liste</a>
+    </body>
+    </html>
+{% endblock %}

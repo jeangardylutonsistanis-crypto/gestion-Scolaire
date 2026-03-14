@@ -1,0 +1,40 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<div class="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6 mt-10">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Modifier la Classe</h1>
+
+    <form method="post" class="space-y-5">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div>
+                <label for="{{ field.id_for_label }}" class="block text-gray-700 font-medium mb-1">
+                    {{ field.label }}
+                </label>
+                {{ field }}
+                {% if field.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ field.errors }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">
+            Enregistrer
+        </button>
+    </form>
+
+    <a href="{% url 'liste_classes' %}"
+       class="block mt-6 text-center text-blue-500 hover:underline">
+       ← Retour à la liste
+    </a>
+</div>
+
+<!-- Style pou input yo -->
+<style>
+    input, select, textarea {
+        @apply w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500;
+    }
+</style>
+{% endblock %}

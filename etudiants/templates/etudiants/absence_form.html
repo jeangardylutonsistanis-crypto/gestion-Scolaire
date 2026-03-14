@@ -1,0 +1,79 @@
+{% extends 'home.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer Absence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans antialiased">
+    <!-- Header Section -->
+    <div class="bg-maroon-800 text-white py-6 shadow-lg">
+        <div class="container mx-auto px-6">
+            <h1 class="text-3xl font-bold">Enregistrer une Absence</h1>
+            <p class="text-maroon-200 mt-2">Gestion des présences étudiantes</p>
+        </div>
+    </div>
+
+    <!-- Form Section -->
+    <div class="container mx-auto p-6 max-w-4xl">
+        <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-8">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Nouvelle Absence</h2>
+                <p class="text-gray-600">Remplissez les informations concernant l'absence de l'étudiant</p>
+            </div>
+
+            <form method="post" class="space-y-6">
+                {% csrf_token %}
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {% for field in form %}
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-gray-700">{{ field.label }}</label>
+                        <div class="relative">
+                            {{ field }}
+                        </div>
+                        {% if field.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ field.errors|striptags }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+                    <button type="submit" class="px-8 py-3 bg-maroon-600 text-white rounded-lg shadow hover:bg-maroon-700 transition duration-300 font-semibold">
+                        ✓ Enregistrer
+                    </button>
+                    <a href="{% url 'absence_list' %}" class="px-8 py-3 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 transition duration-300 font-semibold">
+                        ↶ Annuler
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        .bg-maroon-800 { background-color: #800000; }
+        .bg-maroon-600 { background-color: #A52A2A; }
+        .bg-maroon-700 { background-color: #8B0000; }
+        .text-maroon-200 { color: #F5D7D7; }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: #A52A2A;
+            box-shadow: 0 0 0 3px rgba(165, 42, 42, 0.1);
+            outline: none;
+        }
+    </style>
+</body>
+</html>
+{% endblock %}

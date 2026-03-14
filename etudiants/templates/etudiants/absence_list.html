@@ -1,0 +1,89 @@
+{% extends 'home.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Absences</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans antialiased">
+    <!-- Header Section -->
+    <div class="bg-maroon-800 text-white py-6 shadow-lg">
+        <div class="container mx-auto px-6">
+            <h1 class="text-3xl font-bold">Liste des Absences</h1>
+            <p class="text-maroon-200 mt-2">Suivi des présences étudiantes</p>
+        </div>
+    </div>
+
+    <div class="container mx-auto p-6 max-w-7xl">
+        <!-- Action Button -->
+        {% if user.is_staff %}
+        <div class="mb-6 flex justify-between items-center">
+            {% if user.is_staff %}
+                <a href="{% url 'absence_create' %}" class="px-6 py-3 bg-maroon-600 text-white rounded-lg shadow hover:bg-maroon-700 transition duration-300 font-semibold">
+                + Enregistrer une Absence
+            </a>
+            {% endif %}
+            
+        </div>
+        {% endif %}
+
+        <!-- Table Section -->
+        <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead class="bg-gray-100 border-b border-gray-200">
+                        <tr>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Date</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Étudiant</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Classe</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        {% for absence in absences %}
+                        <tr class="hover:bg-gray-50 transition duration-200">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 font-medium">
+                                {{ absence.date }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                                {{ absence.etudiant }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                                {{ absence.classe.nom }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-3 py-1 text-xs font-semibold rounded-full 
+                                    {% if absence.statut == 'Absent' %}bg-red-100 text-red-800
+                                    {% elif absence.statut == 'Présent' %}bg-green-100 text-green-800
+                                    {% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                                    {{ absence.statut }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {% if not absences %}
+        <div class="text-center py-12">
+            <div class="text-gray-400 text-6xl mb-4">📊</div>
+            <h3 class="text-xl font-semibold text-gray-600">Aucune absence enregistrée</h3>
+            <p class="text-gray-500 mt-2">Commencez par enregistrer une nouvelle absence</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <style>
+        .bg-maroon-800 { background-color: #800000; }
+        .bg-maroon-600 { background-color: #A52A2A; }
+        .bg-maroon-700 { background-color: #8B0000; }
+        .text-maroon-200 { color: #F5D7D7; }
+    </style>
+</body>
+</html>
+{% endblock %}
